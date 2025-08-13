@@ -1,0 +1,117 @@
+﻿@model HotelManagement.Models.AdminDashboardViewModel
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+<div class="container-fluid">
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">Pending Admin Requests</a>
+        </li>
+        <li role="presentation">
+            <a href="#users" aria-controls="users" role="tab" data-toggle="tab">Manage All Users</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <!-- Tab 1: Pending Admin Requests -->
+        <div role="tabpanel" class="tab-pane active" id="pending">
+            <h3>Pending Admin Requests</h3>
+            @if (Model.PendingAdminRequests.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.PendingAdminRequests)
+                        {
+                            <tr>
+                                <td>@user.Username</td>
+                                <td>
+                                    @using (Html.BeginForm("ApproveAdmin", "Admin", FormMethod.Post, new { style = "display:inline;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="userId" value="@user.UserID" />
+                                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                    }
+                                    @using (Html.BeginForm("RejectAdmin", "Admin", FormMethod.Post, new { style = "display:inline;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="userId" value="@user.UserID" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No pending admin requests at this time.</p>
+            }
+        </div>
+
+        <!-- Tab 2: All Users -->
+        <div role="tabpanel" class="tab-pane" id="users">
+            <h3>All Users</h3>
+            <div class="form-group">
+                <label for="roleFilter">Filter by Role:</label>
+                <select id="roleFilter" class="form-control" onchange="filterUsers()">
+                    <option value="All">All</option>
+                    <option value="Admin">Admin</option>
+                    <option value="User">User</option>
+                </select>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- User rows will be inserted here by JavaScript -->
+                    @foreach (var user in Model.AllUsers)
+                    {
+                        <tr class="user-row" data-role="@user.Role">
+                            <td>@user.Username</td>
+                            <td>@user.Role</td>
+                            <td>@(user.IsPendingAdmin ? "Pending Admin" : "Active")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function filterUsers() {
+            var selectedRole = document.getElementById('roleFilter').value;
+            var rows = document.querySelectorAll('#userTableBody .user-row');
+
+            rows.forEach(function(row) {
+                if (selectedRole === 'All' || row.getAttribute('data-role') === selectedRole) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize filtering on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            filterUsers();
+        });
+    </script>
+}

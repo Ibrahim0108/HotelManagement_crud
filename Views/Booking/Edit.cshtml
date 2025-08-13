@@ -1,0 +1,72 @@
+﻿@model HotelManagement.Models.Booking
+@{
+    ViewBag.Title = "Edit";
+}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f3f4f6;
+    }
+</style>
+<div class="flex justify-center items-center p-6 md:p-10 lg:p-16">
+    <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl">
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Edit Booking #@Html.DisplayFor(model => model.BookingId)</h2>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="space-y-6">
+                @Html.ValidationSummary(true, "", new { @class = "text-red-500 font-medium text-sm" })
+                @Html.HiddenFor(model => model.BookingId)
+                <div class="space-y-1">
+                    @Html.LabelFor(model => model.GuestId, htmlAttributes: new { @class = "text-sm font-semibold text-gray-700" })
+                    @Html.EditorFor(model => model.GuestId, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" } })
+                    @Html.ValidationMessageFor(model => model.GuestId, "", new { @class = "text-red-500 text-xs mt-1" })
+                </div>
+
+                <div class="space-y-1">
+                    @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "text-sm font-semibold text-gray-700" })
+                    @Html.EditorFor(model => model.RoomId, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" } })
+                    @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-red-500 text-xs mt-1" })
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        @Html.LabelFor(model => model.CheckInDate, htmlAttributes: new { @class = "text-sm font-semibold text-gray-700" })
+                        @Html.EditorFor(model => model.CheckInDate, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" } })
+                        @Html.ValidationMessageFor(model => model.CheckInDate, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+                    <div class="space-y-1">
+                        @Html.LabelFor(model => model.CheckOutDate, htmlAttributes: new { @class = "text-sm font-semibold text-gray-700" })
+                        @Html.EditorFor(model => model.CheckOutDate, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" } })
+                        @Html.ValidationMessageFor(model => model.CheckOutDate, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "text-sm font-semibold text-gray-700" })
+                        @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" } })
+                        @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+                    <div class="space-y-1">
+                        @Html.LabelFor(model => model.BookingDate, htmlAttributes: new { @class = "text-sm font-semibold text-gray-700" })
+                        @Html.EditorFor(model => model.BookingDate, new { htmlAttributes = new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" } })
+                        @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-between items-center">
+                    <a href="@Url.Action("Index")" class="text-gray-600 hover:text-gray-900 transition duration-200 font-semibold">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to List
+                    </a>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105">
+                        <i class="fas fa-save mr-2"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,61 @@
+﻿@model List<HotelManagement.Models.Booking>
+@{
+    ViewBag.Title = "Bookings";
+}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" xintegrity="sha512-Kfkuy6j/2jL8/j+C/Jp5S7dY2gJ+h1oG9k6B0GfG6nL+W/G7nL+Gf+WfJ+G6zK7g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f3f4f6;
+    }
+</style>
+<div class="p-6">
+    <h2 class="text-4xl font-bold text-gray-800 mb-6">Bookings</h2>
+    <p class="mb-6">
+        @Html.ActionLink("Create New Booking", "Create", null, new { @class = "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300" })
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach (var item in Model)
+        {
+            <div class="bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between transform transition duration-300 hover:scale-105">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-2xl font-bold text-blue-600">Booking #@Html.DisplayFor(modelItem => item.BookingId)</h3>
+                        <div class="text-xs text-gray-500">
+                            Booked on: @Html.DisplayFor(modelItem => item.BookingDate)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex items-center text-gray-700 mb-2">
+                            <i class="fas fa-user-circle text-lg text-gray-500 mr-3"></i>
+                            <span>Guest: <span class="font-semibold">@Html.DisplayFor(modelItem => item.GuestName)</span></span>
+                        </div>
+                        <div class="flex items-center text-gray-700 mb-2">
+                            <i class="fas fa-door-closed text-lg text-gray-500 mr-3"></i>
+                            <span>Room: <span class="font-semibold">@Html.DisplayFor(modelItem => item.RoomNumber) (@Html.DisplayFor(modelItem => item.RoomType))</span></span>
+                        </div>
+                        <div class="flex items-center text-gray-700 mb-2">
+                            <i class="fas fa-calendar-check text-lg text-green-500 mr-3"></i>
+                            <span>Check-in: <span class="font-semibold">@Html.DisplayFor(modelItem => item.CheckInDate)</span></span>
+                        </div>
+                        <div class="flex items-center text-gray-700 mb-2">
+                            <i class="fas fa-calendar-times text-lg text-red-500 mr-3"></i>
+                            <span>Check-out: <span class="font-semibold">@Html.DisplayFor(modelItem => item.CheckOutDate)</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-between items-end mt-4 pt-4 border-t border-gray-200">
+                    <div class="text-2xl font-bold text-gray-800">
+                        @String.Format("{0:C}", item.TotalAmount)
+                    </div>
+                    <div class="flex space-x-2">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }, new { @class = "text-blue-600 hover:text-blue-800" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.BookingId }, new { @class = "text-gray-600 hover:text-gray-800" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.BookingId }, new { @class = "text-red-600 hover:text-red-800" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

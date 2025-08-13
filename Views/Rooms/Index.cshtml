@@ -1,0 +1,161 @@
+﻿@model IEnumerable<HotelManagement.Models.Room>
+
+@{
+    ViewBag.Title = "Rooms List";
+}
+
+
+<h2>Rooms List</h2>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{ 
+<p>
+    @* Html.ActionLink: A Razor helper to generate an HTML <a> tag (hyperlink). *@
+    @* "Create New": The text displayed for the link. *@
+    @* "Create": The name of the action method in the current controller (RoomsController) to navigate to. *@
+    @* null: No route values needed for this simple link. *@
+    @* new { @class = "btn btn-primary" }: HTML attributes for the link (CSS class). *@
+
+
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+}
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAvailable)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAvailable)
+            </td>
+            <td>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+                @Html.ActionLink("Edit", "Edit", new { id = item.RoomID }, new { @class = "btn btn-info btn-sm" }) 
+}
+              | @Html.ActionLink("Details", "Details", new { id = item.RoomID }, new { @class = "btn btn-secondary btn-sm" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RoomID }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<style>
+    /* Basic CSS for better appearance - you can move this to a separate .css file later */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f8f9fa;
+    }
+
+    h2 {
+        color: #343a40;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        margin-right: 5px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #bd2130;
+        }
+
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.875rem;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0,0,0,.02);
+    }
+
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+
+    .table tbody tr:hover {
+        background-color: #e2e6ea;
+    }
+</style>
