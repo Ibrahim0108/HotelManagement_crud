@@ -8,6 +8,7 @@ using HotelManagement.Models;
 
 namespace HotelManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class GuestController : Controller
     {
         private GuestDAL guestDAL = new GuestDAL();

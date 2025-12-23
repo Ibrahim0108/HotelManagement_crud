@@ -49,13 +49,16 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Rooms", "Index", "Rooms")</li>
-                        <li>@Html.ActionLink("Guest", "Index", "Guest")</li>
-                        <li>@Html.ActionLink("Booking", "Index", "Booking")</li>
+                        
+                       
                     }
                     
                             @if (role == "Admin")
                             {
+                                <li>@Html.ActionLink("Guest", "Index", "Guest")</li>
+    <li>@Html.ActionLink("Booking", "Index", "Booking")</li>
                                 <li>@Html.ActionLink("Admin Dashboard", "Dashboard", "Admin")</li>
+                                
                             }
                 </ul>
                 @Html.Partial("_LoginPartial")
